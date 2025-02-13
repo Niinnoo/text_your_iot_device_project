@@ -2,33 +2,6 @@
 
 In this project, a software solution was developed that enables a microcontroller-based IoT device to be accessible via an instant messenger (here Telegram). Using the open-source IoT operating system RIOT, we created firmware for smart objects, evaluated the software on real IoT hardware over IPv6, and leveraged Ollama for natural language processing while collaborating via Git.
 
-## Setting Global Values
-
-1. **Set the following global environment variables (replace `test` with the desired values):**
-   ```sh
-   PSK_IDENTITY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_IDENTITY in line 33 accordingly
-   PSK_KEY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_KEY in line 34 accordingly
-   BOT_AUTH_PASSWORD='test' # Pick a secure password. This password will be used to authenticate yourself in telegram
-   COAP_SERVER_IP='<IP_OF_IOT_DEVICE>' # Use the previously noted global IP of the IOT Device - **Setting Up the IoT Device**
-   ```
-   To set the environment variables permanently:
-
-   1. **Open the `.bashrc` file:**
-      ```sh
-      nano ~/.bashrc
-      ```
-   2. **Add the following lines at the end of the file (replace `test` with the desired values):**
-      ```sh
-      export PSK_IDENTITY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_IDENTITY in line 33 accordingly
-      export PSK_KEY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_KEY in line 34 accordingly
-      export BOT_AUTH_PASSWORD='test' # Pick a secure password. This password will be used to authenticate yourself in telegram
-      export COAP_SERVER_IP='<IP_OF_IOT_DEVICE>' # Use the previously noted global IP of the IOT Device - **Setting Up the IoT Device**
-      ```
-   3. **Apply the changes:**
-      ```sh
-      source ~/.bashrc
-**NOTE: if PSK_IDENTITY and/or PSK_KEY are changed after flashing of the IOT Device (## Setting Up the IoT Device) tinydtls_keys.h has to be modified and the IOT Device has to be flashed again.**
-
 ## Setting Up the Dongle
 
 1. **Before setting up, make sure there are no other devices connected to the PC.**
@@ -92,7 +65,7 @@ In this project, a software solution was developed that enables a microcontrolle
     ```
     - Verify that the `usb0` interface now has the manually set IP.
     - <img src="Screens/nmtui10.png" alt="usb0" width="700">
-14. Your bourder router should now be ready to go.
+14. Your border router should now be ready to go.
 
 ## Setting Up the Telegram Bot
 
@@ -171,20 +144,55 @@ Before you begin, ensure you have met the following requirements:
    - <img src="Screens/Pin_Layout.png" alt="Pin Layout" width="700">
    - Make sure that the data pin of the DHT11 sensor is connected to the P0.31 pin on the IOT Device.
 5. **Connect your IOT Device to your computer.**
-6. **Navigate to the `text_your_iot_device_project` repository folder and execute:**
+6. **(Optionally): Change the PSK_DEFAULT_IDENTITY and PSK_DEFAULT_KEY:**
+   - These are the credentials for the communication between the border router and the IOT Device.
+   - Default value is `test` for both.
+   - In our repository head to tinydtls_keys.h and change the values in lines 33 and 34.
+   ```sh
+   33  #define PSK_DEFAULT_IDENTITY "test"
+   34  #define PSK_DEFAULT_KEY "test"
+   ```
+7. **Navigate to the `text_your_iot_device_project` repository folder and execute:**
    ```sh
    make flash term BOARD=nrf52840dk
    ```
-7. **The serial interface of the `nrf52840dk` will open.**
-8. **Run `ifconfig` and note the global IP for later use.**
+8. **The serial interface of the `nrf52840dk` will open.**
+9. **Run `ifconfig` and note the global IP for later use.**
    - <img src="Screens/IOT_IP.png" alt="IOT Device IP Address" width="700">
-9. **Check if the external sensor is working with:**
+10. **Check if the external sensor is working with:**
    ```sh
    dht
    ```
    - If correctly connected, it will output the current temperature and humidity.
    - <img src="Screens/DHT_TEST.png" alt="DHT Test" width="700">
-10. **Exit the serial interface using `Ctrl + C`. The IOT Device is now set up and can be placed at a suitable location.**
+11. **Exit the serial interface using `Ctrl + C`. The IOT Device is now set up and can be placed at a suitable location.**
+
+## Setting Global Values
+
+1. **Set the following global environment variables (replace `test` with the new values if default values have been changed):**
+   ```sh
+   PSK_IDENTITY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_IDENTITY in line 33 accordingly
+   PSK_KEY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_KEY in line 34 accordingly
+   BOT_AUTH_PASSWORD='test' # Pick a secure password. This password will be used to authenticate yourself in telegram
+   COAP_SERVER_IP='<IP_OF_IOT_DEVICE>' # Use the previously noted global IP of the IOT Device - **Setting Up the IoT Device**
+   ```
+   To set the environment variables permanently:
+
+   1. **Open the `.bashrc` file:**
+      ```sh
+      nano ~/.bashrc
+      ```
+   2. **Add the following lines at the end of the file (replace `test` with the desired values):**
+      ```sh
+      export PSK_IDENTITY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_IDENTITY in line 33 accordingly
+      export PSK_KEY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_KEY in line 34 accordingly
+      export BOT_AUTH_PASSWORD='test' # Pick a secure password. This password will be used to authenticate yourself in telegram
+      export COAP_SERVER_IP='<IP_OF_IOT_DEVICE>' # Use the previously noted global IP of the IOT Device - **Setting Up the IoT Device**
+      ```
+   3. **Apply the changes:**
+      ```sh
+      source ~/.bashrc
+**NOTE: if PSK_IDENTITY and/or PSK_KEY are changed after flashing of the IOT Device (## Setting Up the IoT Device) tinydtls_keys.h has to be modified and the IOT Device has to be flashed again.**
 
 ## Setup for automatic start of the Telegram Bot after booting
 
@@ -216,18 +224,18 @@ Before you begin, ensure you have met the following requirements:
 
 3. ***Start the Service using:**
    ```sh
-   sudo systemctl start <NAME_OF_YOUR_SERVICE>.service
+   sudo systemctl start <MY_SCRIPT>.service
    ```
 4. **Enable the service to be run after boot up using:**
    ```sh
-   sudo systemctl enable <NAME_OF_YOUR_SERVICE>.service
+   sudo systemctl enable <MY_SCRIPT>.service
    ```
 5. **To check if everything is running correctly:**
    ```sh
-   sudo systemctl status <NAME_OF_YOUR_SERVICE>.service
+   sudo systemctl status <MY_SCRIPT>.service
    ```
 6. **To disable or stop the service use the following commands respectivly:**
    ```sh
-   sudo systemctl disable <NAME_OF_YOUR_SERVICE>.service
-   sudo systemctl stop <NAME_OF_YOUR_SERVICE>.service
+   sudo systemctl disable <MY_SCRIPT>.service
+   sudo systemctl stop <MY_SCRIPT>.service
    ```
