@@ -14,7 +14,7 @@ Before starting the project you will need the following hard- and software compo
 
 ## Setting Up the Dongle
 
-1. **Before setting up, make sure there are no other devices connected to the PC.**
+1. **Before setting up, make sure there are no other devices connected to the PC and the dongle is plugged in.**
 2. Clone the repository:
    ```sh
    git clone https://github.com/AllRIOT/RIOT.git
