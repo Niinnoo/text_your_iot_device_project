@@ -268,5 +268,5 @@ All hard- and software components need to be setup correctly. In this repository
 
 ## Using the Bot
 
-If everything is setup correctly, open Telegram and create a new chat with the bot you created in [BotFather](https://core.telegram.org/bots#botfather). The bot now should be running and ready for interaction :)
+If everything is setup correctly and the telegram_bot.py is either running automatically (started after setup) or manually, open Telegram and create a new chat with the bot you created in [BotFather](https://core.telegram.org/bots#botfather). The bot now should be ready for interaction :)
 
