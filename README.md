@@ -211,7 +211,7 @@ Start by connecting to your Raspberry Pi via SSH.
    3. Apply the changes:
       ```sh
       source ~/.bashrc
-**NOTE: if PSK_IDENTITY and/or PSK_KEY are changed after flashing of the IOT Device (## Setting Up the IoT Device) tinydtls_keys.h has to be modified and the IOT Device has to be flashed again.**
+**NOTE: if PSK_IDENTITY and/or PSK_KEY are changed after flashing of the IOT Device (see section "Setting Up the IoT Device") tinydtls_keys.h has to be modified and the IOT Device has to be flashed again.**
 
 ## Setup for automatic start of the Telegram Bot after booting
 
