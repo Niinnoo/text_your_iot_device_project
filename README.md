@@ -97,27 +97,27 @@ Before you begin, ensure you have met the following requirements:
 
 ### Installation
 
-1. **Connect via SSH using the public IP of the Raspberry Pi and login using your credentials and the correct network interface e.g.:**
+1. Connect via SSH using the public IP of the Raspberry Pi and login using your credentials and the correct network interface e.g.:
    ```sh
    ssh riot@2001:470:7347:c400:1000::%eno2
    ```
-2. **Install Ollama:**
+2. Install Ollama:
    ```sh
    curl -fsSL https://ollama.com/install.sh | sh
    ```
-3. **Pull the required model:**
+3. Pull the required model:
    ```sh
    ollama pull llama3.2:1b-instruct-q4_0
    ```
-4. **In the repository navigate to `telegram_bot`:**
+4. In the repository navigate to `telegram_bot`:
    ```sh
    cd telegram_bot
    ```
-5. **Create a virtual environment:**
+5. Create a virtual environment:
    ```sh
    python3 -m venv <name>
    ```
-6. **Activate the virtual environment and install dependencies:**
+6. Activate the virtual environment and install dependencies:
    ```sh
    source <name>/bin/activate
    pip install -r requirements.txt
@@ -134,7 +134,7 @@ Before you begin, ensure you have met the following requirements:
      sudo apt install python3-dev python3-pip python3-venv
      ```
    - <img src="Screens/dtlssocket_error.png" alt="DTLSSocket error" width="700">
-7. **Replace the `YOUR_TOKEN` placeholder with your actual Telegram bot token in `telegram_bot.py`:**
+7. Replace the `YOUR_TOKEN` placeholder with your actual Telegram bot token in `telegram_bot.py`:
    ```python
    application = Application.builder().token("YOUR_TOKEN").build()
    ```
@@ -142,20 +142,20 @@ Before you begin, ensure you have met the following requirements:
 ## Setting Up the IoT Device
 
 1. **Before setting up, make sure there are no other devices connected to the PC.**
-2. **Clone the RIOT repository on your computer:**
+2. Clone the RIOT repository on your computer:
    ```sh
    git clone https://github.com/RIOT-OS/RIOT.git
    ```
-3. **Set the following environment variables (absolute path to the RIOT folder):**
+3. Set the following environment variables (absolute path to the RIOT folder):
    ```sh
    export RIOTMAKE='/home/<user>/RIOT/makefiles' # if repository was cloned to users root directory
    export RIOTBASE='/home/<user>/RIOT' # if repository was cloned to users root directory
    ```
-4. **Connect the DHT11 sensor to your IOT Device:**
+4. Connect the DHT11 sensor to your IOT Device:
    - <img src="Screens/Pin_Layout.png" alt="Pin Layout" width="700">
    - Make sure that the data pin of the DHT11 sensor is connected to the P0.31 pin on the IOT Device.
-5. **Connect your IOT Device to your computer.**
-6. **(Optionally): Change the PSK_DEFAULT_IDENTITY and PSK_DEFAULT_KEY:**
+5. Connect your IOT Device to your computer.
+6. (Optionally): Change the PSK_DEFAULT_IDENTITY and PSK_DEFAULT_KEY:
    - These are the credentials for the communication between the border router and the IOT Device.
    - Default value is `test` for both.
    - In our repository head to tinydtls_keys.h and change the values in lines 33 and 34.
@@ -163,20 +163,20 @@ Before you begin, ensure you have met the following requirements:
    33  #define PSK_DEFAULT_IDENTITY "test"
    34  #define PSK_DEFAULT_KEY "test"
    ```
-7. **Navigate to the `text_your_iot_device_project` repository folder and execute:**
+7. Navigate to the `text_your_iot_device_project` repository folder and execute:
    ```sh
    make flash term BOARD=nrf52840dk
    ```
-8. **The serial interface of the `nrf52840dk` will open.**
-9. **Run `ifconfig` and note the global IP for later use.**
+8. The serial interface of the `nrf52840dk` will open.
+9. Run `ifconfig` and note the global IP for later use.
    - <img src="Screens/IOT_IP.png" alt="IOT Device IP Address" width="700">
-10. **Check if the external sensor is working with:**
+10. Check if the external sensor is working with:
    ```sh
    dht
    ```
    - If correctly connected, it will output the current temperature and humidity.
    - <img src="Screens/DHT_TEST.png" alt="DHT Test" width="700">
-11. **Exit the serial interface using `Ctrl + C`. The IOT Device is now set up and can be placed at a suitable location.**
+11. Exit the serial interface using `Ctrl + C`. The IOT Device is now set up and can be placed at a suitable location.
 
 ### Unlocking the nrf52840-dk
 
@@ -188,7 +188,7 @@ When your nrf52840-dk gets locked and you're not able to flash it, use the follo
 
 ## Setting Global Values
 Start by connecting to your Raspberry Pi via SSH.
-1. **Set the following global environment variables (replace `test` with the new values if default values have been changed):**
+1. Set the following global environment variables (replace `test` with the new values if default values have been changed):
    ```sh
    PSK_IDENTITY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_IDENTITY in line 33 accordingly
    PSK_KEY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_KEY in line 34 accordingly
@@ -197,29 +197,29 @@ Start by connecting to your Raspberry Pi via SSH.
    ```
    To set the environment variables permanently:
 
-   1. **Open the `.bashrc` file:**
+   1. Open the `.bashrc` file:
       ```sh
       nano ~/.bashrc
       ```
-   2. **Add the following lines at the end of the file (replace `test` with the desired values):**
+   2. Add the following lines at the end of the file (replace `test` with the desired values):
       ```sh
       export PSK_IDENTITY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_IDENTITY in line 33 accordingly
       export PSK_KEY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_KEY in line 34 accordingly
       export BOT_AUTH_PASSWORD='test' # Pick a secure password. This password will be used to authenticate yourself in telegram
       export COAP_SERVER_IP='<IP_OF_IOT_DEVICE>' # Use the previously noted global IP of the IOT Device - **Setting Up the IoT Device**
       ```
-   3. **Apply the changes:**
+   3. Apply the changes:
       ```sh
       source ~/.bashrc
 **NOTE: if PSK_IDENTITY and/or PSK_KEY are changed after flashing of the IOT Device (## Setting Up the IoT Device) tinydtls_keys.h has to be modified and the IOT Device has to be flashed again.**
 
 ## Setup for automatic start of the Telegram Bot after booting
 
-1. **On the raspberry pi run**
+1. On the raspberry pi run
    ```sh
    sudo nano /etc/systemd/system/<my_script>.service # replace <my_script> with your preferred service name
    ```
-2. **Copy the following text into the created .service file:**
+2. Copy the following text into the created .service file:
    ```sh
    [Unit]
    Description=My Telegram Bot
@@ -241,19 +241,19 @@ Start by connecting to your Raspberry Pi via SSH.
    WantedBy=multi-user.target
    ```
 
-3. ***Start the Service using:**
+3. Start the Service using:
    ```sh
    sudo systemctl start <MY_SCRIPT>.service
    ```
-4. **Enable the service to be run after boot up using:**
+4. Enable the service to be run after boot up using:
    ```sh
    sudo systemctl enable <MY_SCRIPT>.service
    ```
-5. **To check if everything is running correctly:**
+5. To check if everything is running correctly:
    ```sh
    sudo systemctl status <MY_SCRIPT>.service
    ```
-6. **To disable or stop the service use the following commands respectivly:**
+6. To disable or stop the service use the following commands respectivly:
    ```sh
    sudo systemctl disable <MY_SCRIPT>.service
    sudo systemctl stop <MY_SCRIPT>.service
