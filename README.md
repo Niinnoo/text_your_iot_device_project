@@ -168,7 +168,7 @@ Before you begin, ensure you have met the following requirements:
 11. **Exit the serial interface using `Ctrl + C`. The IOT Device is now set up and can be placed at a suitable location.**
 
 ## Setting Global Values
-
+Start by connecting to your Raspberry Pi via SSH.
 1. **Set the following global environment variables (replace `test` with the new values if default values have been changed):**
    ```sh
    PSK_IDENTITY='test' # if changed to another value than `test` head to tinydtls_keys.h and modify the PSK_DEFAULT_IDENTITY in line 33 accordingly
