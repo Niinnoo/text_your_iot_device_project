@@ -258,3 +258,15 @@ Start by connecting to your Raspberry Pi via SSH.
    sudo systemctl disable <MY_SCRIPT>.service
    sudo systemctl stop <MY_SCRIPT>.service
    ```
+
+## Manual booting of the Telegram Bot
+
+All hard- and software components need to be setup correctly. In this repository navigate to `telegram_bot` and use the following command:
+```sh
+   python3 telegram_bot.py
+   ```
+
+## Using the Bot
+
+If everything is setup correctly, open Telegram and create a new chat with the bot you created in [BotFather](https://core.telegram.org/bots#botfather). The bot now should be running and ready for interaction :)
+
