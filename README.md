@@ -1,6 +1,16 @@
 # Text Your IoT Device
 
-In this project, a software solution was developed that enables a microcontroller-based IoT device to be accessible via an instant messenger (here Telegram). Using the open-source IoT operating system RIOT, we created firmware for smart objects, evaluated the software on real IoT hardware over IPv6, and leveraged Ollama for natural language processing while collaborating via Git.
+In this project, a software solution was developed that enables communication between a microcontroller (nrf52840-dk) and an end user on his device using an instant messenger (in this case Telegram). Based on the open-source IoT operating system RIOT, we created a server-client architecture to make sensor values of the microcontroller accessible. We further tested the software on the nrf52840-dk, and leveraged Ollama for natural language processing while tracking changes via Git.
+The project was carried out for the Project Digitalization "Text your IoT Device" in the winter term 24/25 at the Frankfurt University of Applied Sciences. 
+
+## Prerequisites
+
+Before starting the project you will need the following hard- and software components:
+- nrf52840-dk microcontroller
+- nrf52840dongle
+- Raspberry Pi + ethernet cable
+- DHT11 Sensor + Breadboard + 10k resistor & cables to connect
+- computer that can run RIOT OS (https://doc.riot-os.org/getting-started.html)
 
 ## Setting Up the Dongle
 
@@ -25,9 +35,9 @@ In this project, a software solution was developed that enables a microcontrolle
 6. After execution, the message `Device programmed` should appear.
 7. Remove the nrf52840dongle from your computer and plug it into your Raspberry Pi.
 8. Connect a ethernet cable to your Raspberry Pi and power it on.
-9. Connect via SSH using the public IP of the Raspberry Pi and login using your credentials e.g.:
+9. Connect via SSH using the public IP of the Raspberry Pi and login using your credentials and specifying the correct network interface e.g.:
    ```sh
-   ssh riot@2001:470:7347:c400:1000::
+   ssh riot@2001:470:7347:c400:1000::%eno2
    ```
 10. Run the command:
    ```sh
@@ -86,9 +96,9 @@ Before you begin, ensure you have met the following requirements:
 
 ### Installation
 
-1. **Connect via SSH using the public IP of the Raspberry Pi and login using your credentials e.g.:**
+1. **Connect via SSH using the public IP of the Raspberry Pi and login using your credentials and the correct network interface e.g.:**
    ```sh
-   ssh riot@2001:470:7347:c400:1000::
+   ssh riot@2001:470:7347:c400:1000::%eno2
    ```
 2. **Install Ollama:**
    ```sh
@@ -166,6 +176,14 @@ Before you begin, ensure you have met the following requirements:
    - If correctly connected, it will output the current temperature and humidity.
    - <img src="Screens/DHT_TEST.png" alt="DHT Test" width="700">
 11. **Exit the serial interface using `Ctrl + C`. The IOT Device is now set up and can be placed at a suitable location.**
+
+### Unlocking the nrf52840-dk
+
+When your nrf52840-dk gets locked and you're not able to flash it, use the following command to unlock it.
+   ```sh
+   openocd -c 'interface jlink; transport select swd; \
+   source [find target/nrf52.cfg]' -c 'init'  -c 'nrf52_recover'
+   ```
 
 ## Setting Global Values
 Start by connecting to your Raspberry Pi via SSH.
