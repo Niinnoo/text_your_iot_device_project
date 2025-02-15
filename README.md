@@ -85,7 +85,7 @@ Before starting the project you will need the following hard- and software compo
 Before you begin, ensure you have met the following requirements:
 
 - `curl` is installed on your machine.
-- This repository is cloned. (https://github.com/Niinnoo/text_your_iot_device_project)
+- This repository is cloned [Text your IoT Device](https://github.com/Niinnoo/text_your_iot_device_project).
 - You have a Telegram bot token. If you don't have one, create a bot and get the token from [BotFather](https://core.telegram.org/bots#botfather).
 - Have the newest version of Python installed.
 - Have the newest version of Pip installed.
