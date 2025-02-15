@@ -45,6 +45,7 @@ Before starting the project you will need the following hard- and software compo
    ```
    - <img src="Screens/nmtui11.png" alt="nmtui" width="700">
    The command should list the interface `usb0`.
+   
 11. Run the command:
    ```sh
    sudo nmtui
